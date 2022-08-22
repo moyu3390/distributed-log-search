@@ -5,7 +5,6 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import com.hclteam.distributed.log.core.cache.model.CacheLogListData;
 import com.hclteam.distributed.log.core.cache.model.ServerLogData;
 import com.hclteam.distributed.log.core.cache.model.j.PageData;
-import sun.jvm.hotspot.tools.SysPropsDumper;
 
 import java.util.concurrent.TimeUnit;
 
