@@ -8,9 +8,9 @@ import java.util.*;
 public class DataGenerator {
 
     public static Map<String, List<Map<String, Object>>> genData() {
-        DataNum dataNum = new DataNum("127.0.0.1", 56);
-        DataNum dataNum2 = new DataNum("localhost", 422);
-        DataNum dataNum3 = new DataNum("110.110.110.110", 643);
+        DataNum dataNum = new DataNum("127.0.0.1", 100);
+        DataNum dataNum2 = new DataNum("localhost", 150);
+        DataNum dataNum3 = new DataNum("110.110.110.110", 200);
         List<DataNum> dataNums = new ArrayList<>();
         dataNums.add(dataNum);
         dataNums.add(dataNum2);
@@ -40,10 +40,10 @@ public class DataGenerator {
                 LogEntity log = new LogEntity();
                 log.setId(id);
                 log.setLogContent(id + "============" + i);
-                try {
-                    Thread.sleep(10L);
-                } catch (InterruptedException e) {
-                }
+//                try {
+//                    Thread.sleep(10L);
+//                } catch (InterruptedException e) {
+//                }
                 log.setCreateTime(System.currentTimeMillis());
                 ++id;
                 l.add(log);

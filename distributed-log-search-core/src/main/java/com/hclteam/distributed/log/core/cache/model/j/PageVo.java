@@ -13,6 +13,8 @@ public class PageVo<T> implements Serializable {
     private int pageNo;
     // 当前内存每页条数
     private int pageSize;
+    // 内存中内存当前页数据起始点偏移量，向左偏移
+    private int offset;
 
     public List<T> getDataList() {
         return dataList;
@@ -44,5 +46,13 @@ public class PageVo<T> implements Serializable {
 
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
     }
 }

@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Main {
-    static int pageNo =     33;
+    static int pageNo =     43;
 
-    static int pageSize = 25;
+    static int pageSize = 10;
 
     static List<ServerInfoData> serverInfoDataList = DataGenerator.genServerInfoDataList();
 

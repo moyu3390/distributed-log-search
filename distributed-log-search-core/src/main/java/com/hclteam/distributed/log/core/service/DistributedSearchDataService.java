@@ -18,7 +18,7 @@ public class DistributedSearchDataService {
     /**
      * 内存中每页条数,大于等于页面实际显示条数
      */
-    private int cache_page_size = 50;
+    private int cache_page_size = 20;
 
     private DataCollector dataCollector;
 
@@ -127,16 +127,21 @@ public class DistributedSearchDataService {
                     int diffNum = num - cachePageSize;
                     List<CacheData> dataList1 = dataTemp.getPageVo().getDataList();
 
-                    if (totalCount - 1 <= pageMax) {
-                        if (diffNum > 0) {
-                            dataList1 = dataList1.subList(0, num - diffNum);
-                        }
-                    } else {
-                        if (diffNum > 0) {
-                            dataList1 = dataList1.subList(diffNum, num);
-                        }
-                    }
+//                    if (totalCount - 1 <= pageMax) {
+//                        if (diffNum > 0) {
+//                            dataList1 = dataList1.subList(0, num - diffNum);
+//                        }
+//                    } else {
+//                        if (diffNum > 0) {
+//                            dataList1 = dataList1.subList(diffNum, num);
+//                        }
+//                    }
+
+
                     cacheDataTemp.getPageVo().setDataList(dataList1);
+                    if(diffNum>0) {
+                        cacheDataTemp.getPageVo().setOffset(diffNum);
+                    }
                 }
             }
 
@@ -212,6 +217,11 @@ public class DistributedSearchDataService {
         int cachePageSizeTemp = pageVo.getPageSize();
         // 内存中存在的数据的范围
         long cacheMin = (cachePageNo - 1) * cachePageSizeTemp * serverCount;
+        int offset = pageVo.getOffset();
+        if(offset>0) {
+            //左移开始点
+            cacheMin = cacheMin - offset;
+        }
         long cacheMax = (cachePageNo * cachePageSizeTemp * serverCount) - 1;
 
         int indexMin = 0;
