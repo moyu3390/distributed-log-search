@@ -23,6 +23,8 @@ public class DataCollectLocal implements DataCollector {
         List<Map<String, Object>> maps = dataMap.get(host);
         long totalCount = maps.size();
         long totalPage = (totalCount + pageSize - 1) / pageSize;
+        long surplus = totalCount - (pageNo*pageSize);
+        surplus = surplus<0?0:surplus;
         if (totalPage < pageNo) {
             // 不返回数据，返回服务器信息
             PageVo<CacheData> pageVo = new PageVo<>();
@@ -38,6 +40,7 @@ public class DataCollectLocal implements DataCollector {
             serverData.setTotalCount(totalCount);
             serverData.setDataListSize(0L);
             serverData.setPageNo(pageNo);
+            serverData.setSurplus(surplus);
             serverData.setServerInfo(serverInfoDataMap.get(host));
             serverDataList.add(serverData);
             PageData<ServerData, CacheData> pageData = new PageData<>();
@@ -83,6 +86,7 @@ public class DataCollectLocal implements DataCollector {
         serverData.setPageCount(totalPage);
         serverData.setTotalCount(totalCount);
         serverData.setPageNo(pageNo);
+        serverData.setSurplus(surplus);
         serverData.setDataListSize(dataList.size());
         serverData.setServerInfo(serverInfoDataMap.get(host));
         serverDataList.add(serverData);

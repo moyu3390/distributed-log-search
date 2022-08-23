@@ -18,6 +18,8 @@ public class ServerData implements Serializable {
     private ServerInfoData serverInfo;
     // 由于其他节点数据不足，本次查询在本节点上重新计算每页条数和分页，多查出来的数据， 比如：之前查第8页，每页20条，从140条数据开始，重新分页后，查第3页，每页60条，从120条开始查， 多查的20条就是差值。在查询时需要把起始点补足差值，才是接本次正常查询真正开始的数据
     private int diffIndex;
+    // 服务器数据剩余量，当前页之后的数据量
+    private long surplus;
 
     public long getTotalCount() {
         return totalCount;
@@ -73,5 +75,13 @@ public class ServerData implements Serializable {
 
     public void setDiffIndex(int diffIndex) {
         this.diffIndex = diffIndex;
+    }
+
+    public long getSurplus() {
+        return surplus;
+    }
+
+    public void setSurplus(long surplus) {
+        this.surplus = surplus;
     }
 }

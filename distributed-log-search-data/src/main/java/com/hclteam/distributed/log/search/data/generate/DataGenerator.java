@@ -12,9 +12,11 @@ public class DataGenerator {
         DataNum dataNum = new DataNum("127.0.0.1", 100);
         DataNum dataNum2 = new DataNum("localhost", 150);
         DataNum dataNum3 = new DataNum("110.110.110.110", 200);
+//        DataNum dataNum4 = new DataNum("220.220.220.220", 45);
         List<DataNum> dataNums = new ArrayList<>();
         dataNums.add(dataNum);
         dataNums.add(dataNum2);
+//        dataNums.add(dataNum4);
         dataNums.add(dataNum3);
 
         Map<String, List<LogEntity>> data = getData(dataNums);
@@ -39,8 +41,9 @@ public class DataGenerator {
             List<LogEntity> l = new ArrayList<>();
             for (int i = 0; i < d.getCount(); i++) {
                 LogEntity log = new LogEntity();
-                log.setId(id);
+                log.setId(i);
                 log.setLogContent(id + "============" + i);
+                log.setServerIp(d.getIp());
 //                try {
 //                    Thread.sleep(10L);
 //                } catch (InterruptedException e) {
@@ -68,10 +71,12 @@ public class DataGenerator {
     public static Map<String,ServerInfoData> genServerInfoData() {
         ServerInfoData dataNum = new ServerInfoData(1,"127.0.0.1");
         ServerInfoData dataNum2 = new ServerInfoData(3,"localhost");
+//        ServerInfoData dataNum4 = new ServerInfoData(4,"220.220.220.220");
         ServerInfoData dataNum3 = new ServerInfoData(2,"110.110.110.110");
         Map<String,ServerInfoData> map = new HashMap<>();
         map.put("127.0.0.1",dataNum);
         map.put("localhost",dataNum2);
+//        map.put("220.220.220.220",dataNum4);
         map.put("110.110.110.110",dataNum3);
 
         return map;

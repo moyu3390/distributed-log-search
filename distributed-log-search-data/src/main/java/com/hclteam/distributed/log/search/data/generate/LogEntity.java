@@ -6,6 +6,8 @@ public class LogEntity {
     private long createTime;
     private String logContent;
 
+    private String serverIp;
+
     public long getId() {
         return id;
     }
@@ -28,5 +30,13 @@ public class LogEntity {
 
     public void setLogContent(String logContent) {
         this.logContent = logContent;
+    }
+
+    public String getServerIp() {
+        return serverIp;
+    }
+
+    public void setServerIp(String serverIp) {
+        this.serverIp = serverIp;
     }
 }

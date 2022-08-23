@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Main {
-    static int pageNo = 37;
+    static int pageNo = 11;
 
     static int pageSize = 10;
 
@@ -21,33 +21,33 @@ public class Main {
 
     public static void main(String[] args) {
         DistributedSearchDataService service = new DistributedSearchDataService(new DataCollectLocal());
-        PageVo<Map<String, Object>> mapPageVo = service.searchData(pageNo, pageSize, "", "111.111.111.111", serverInfoDataList);
-        System.out.println(JSONObject.toJSONString(mapPageVo));
+//        PageVo<Map<String, Object>> mapPageVo = service.searchData(pageNo, pageSize, "", "111.111.111.111", serverInfoDataList);
+//        System.out.println(JSONObject.toJSONString(mapPageVo));
 
 
 
 
 
 
-//        List<Integer> list = new ArrayList<>();
-//        for (int i = 0; i < 45; i++) {
-//            PageVo<Map<String, Object>> mapPageVo = service.searchData((i + 1), pageSize, "", "111.111.111.111", serverInfoDataList);
-//            System.out.println("第" + (i + 1) + "页 :");
-//            mapPageVo.getDataList().forEach(m -> {
-//                String id = m.get("id").toString();
-//                System.out.print("\t" + id);
-//                list.add(Integer.valueOf(id));
-//
-//            });
-//            System.out.println();
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < 45; i++) {
+            PageVo<Map<String, Object>> mapPageVo = service.searchData((i + 1), pageSize, "", "111.111.111.111", serverInfoDataList);
+            System.out.println("第" + (i + 1) + "页 :");
+            mapPageVo.getDataList().forEach(m -> {
+                String id = m.get("id").toString();
+                System.out.print("\t" + id);
+                list.add(Integer.valueOf(id));
+
+            });
+            System.out.println();
 //            if(i==36) break;
-//        }
-//
-//        List<Integer> integers = checkRepeat(list);
-//        System.out.println("重复元素：");
-//        integers.stream().forEach(i -> {
-//            System.out.print("\t" + i);
-//        });
+        }
+
+        List<Integer> integers = checkRepeat(list);
+        System.out.println("重复元素：");
+        integers.stream().forEach(i -> {
+            System.out.print("\t" + i);
+        });
 
 
 
