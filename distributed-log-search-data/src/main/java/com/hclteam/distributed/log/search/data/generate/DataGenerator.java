@@ -1,6 +1,7 @@
 package com.hclteam.distributed.log.search.data.generate;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hclteam.distributed.log.core.cache.model.CacheData;
 import com.hclteam.distributed.log.core.cache.model.ServerInfoData;
 
 import java.util.*;
@@ -32,7 +33,7 @@ public class DataGenerator {
     }
 
     private static Map<String, List<LogEntity>> getData(List<DataNum> dataNums) {
-        int id = 1;
+        int id = 0;
         Map<String, List<LogEntity>> data = new HashMap<>();
         for (DataNum d : dataNums) {
             List<LogEntity> l = new ArrayList<>();
@@ -48,12 +49,16 @@ public class DataGenerator {
                 ++id;
                 l.add(log);
             }
-            l.sort(new Comparator<LogEntity>() {
-                @Override
-                public int compare(LogEntity o1, LogEntity o2) {
-                    return o1.getCreateTime().compareTo(o2.getCreateTime());
-                }
-            });
+//            l.sort(new Comparator<LogEntity>() {
+//                @Override
+//                public int compare(LogEntity o1, LogEntity o2) {
+//                    return compare(o2.getId(),o1.getId());
+//                }
+//
+//                public int compare(long x, long y) {
+//                    return (x < y) ? -1 : ((x == y) ? 0 : 1);
+//                }
+//            });
             data.put(d.getIp(), l);
         }
         return data;

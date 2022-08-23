@@ -12,7 +12,7 @@ public class CacheBuilder {
 
     public static <K, V> Cache<K, V> builderCache(Long expireTime, TimeUnit timeUnit, Long maxSize) {
         Cache<K, V> cache = Caffeine.newBuilder()
-                .weakValues()
+//                .weakValues()
                 //5秒没有读写自动删除
                 .expireAfterAccess(expireTime, timeUnit)
                 //最大容量1024个，超过会自动清理空间

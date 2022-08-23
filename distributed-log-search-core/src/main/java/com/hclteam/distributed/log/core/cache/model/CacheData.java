@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class CacheData implements Serializable {
 
-    // 日志id
+    // 数据主键id（唯一标识）
     private Long dataId;
     // 创建时间
     private Long createTime;
