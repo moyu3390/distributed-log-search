@@ -118,7 +118,7 @@ public class DistributedSearchDataService {
                     dataTemp.getPageVo().getDataList().sort(new Comparator<CacheData>() {
                         @Override
                         public int compare(CacheData o1, CacheData o2) {
-                            return o2.getCreateTime().compareTo(o1.getCreateTime());
+                            return o1.getDataId().compareTo(o2.getDataId());
                         }
                     });
 
@@ -131,13 +131,11 @@ public class DistributedSearchDataService {
                     if (diffNum > 0) {
                         cacheDataTemp.getPageVo().setOffset(diffNum);
                     }
-                    cacheData = cacheDataTemp;
+//                    cacheData = cacheDataTemp;
                 }
             }
 
-            if(Objects.nonNull(cacheDataTemp)) {
-                cacheData = cacheDataTemp;
-            }
+            cacheData = cacheDataTemp;
         }
         Cache<String, PageData<ServerData, CacheData>> clientCache = CACHES.getIfPresent(clientIp);
         if (Objects.nonNull(cacheData)) {
@@ -199,7 +197,7 @@ public class DistributedSearchDataService {
     }
 
 
-    public PageVo<CacheData> getPageIdList(int pageNo, int pageSize, PageVo<CacheData> pageVo, long serverCount) {
+    public PageVo<CacheData> getPageIdList(int pageNo, int pageSize, PageVo<CacheData> pageVo, int serverCount) {
         // 页面数据的检索条数范围
         long pageMin = (pageNo - 1) * pageSize;
         long pageMax = pageNo * pageSize - 1;
@@ -209,12 +207,23 @@ public class DistributedSearchDataService {
         int cachePageSizeTemp = pageVo.getPageSize();
         // 内存中存在的数据的范围
         long cacheMin = (cachePageNo - 1) * cachePageSizeTemp * serverCount;
-        int offset = pageVo.getOffset();
-        if (offset > 0) {
-            //左移开始点
-            cacheMin = cacheMin - offset;
-        }
         long cacheMax = (cachePageNo * cachePageSizeTemp * serverCount) - 1;
+
+        // 总条数
+        long totalCount = pageVo.getTotalCount();
+//        if (totalCount < cacheMax) {
+//            cacheMax = totalCount;
+//
+//        }
+
+        // 每台节点设备数据偏移量
+        int offset = pageVo.getOffset();
+        // 总的数据偏移量
+        int indexOffset = serverCount * offset;
+//        if (offset > 0) {
+//            //左移开始点
+//            cacheMin = cacheMin - offset;
+//        }
 
         int indexMin = 0;
         // 数据实际长度
@@ -235,7 +244,18 @@ public class DistributedSearchDataService {
         if (start > indexMax) {
             start = 0;
         }
+
+
         int end = (int) (pageMax - cacheMin);
+
+        // 说明有节点数据已不足 且是内存中的数据范围超出了数据最大数（最后一页）
+        if (indexOffset > 0 && (cacheMax > totalCount)) {
+            // 内存中的数据范围超出了数据最大数（最后一页）
+            start += indexOffset + offset;
+            end += indexOffset + offset;
+        }
+
+
         if (end > indexMax) {
             end = indexMax;
         }
@@ -272,9 +292,10 @@ public class DistributedSearchDataService {
             @Override
             public int compare(CacheData o1, CacheData o2) {
 //                return o2.getCreateTime().compareTo(o1.getCreateTime());
-                return compare(o1.getDataId(),o2.getDataId());
+                return compare(o1.getDataId(), o2.getDataId());
 //                return (o2.getCreateTime() < o1.getCreateTime()) ? -1 : ((o2.getCreateTime() == o1.getCreateTime()) ? 0 : 1);
             }
+
             public int compare(long x, long y) {
                 return (x < y) ? -1 : ((x == y) ? 0 : 1);
             }

@@ -52,6 +52,7 @@ public class DataCollectLocal implements DataCollector {
 
 
         int end = pageNo * pageSize - 1;
+        // 如果差值大于0，则表示新分页后的开始元素和页面要查找的元素不匹配，需要校正，即把新分页的起始点和终止点 向右移动差值大小
         if (diffIndex > 0) {
             start = start + diffIndex;
             end = end + diffIndex;
